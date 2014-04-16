@@ -13,16 +13,11 @@ use GuzzleHttp\Command\Event\ProcessEvent;
 class GuzzleCommandClient
 {
 
-    /** @var  GuzzleHttp\Command\Guzzle\GuzzleClient */
+    /** @var  \GuzzleHttp\Command\Guzzle\GuzzleClient */
     protected $client;
 
-    /**
-     * Constructor for the class
-     */
-    public function __construct()
-    {
-        $this->initClient();
-    }
+    /** @var  \GuzzleHttp\Command\Guzzle\Description */
+    protected $description;
 
     /**
      * Getter for the client
@@ -52,6 +47,16 @@ class GuzzleCommandClient
     }
 
     /**
+     * @param string $jsonConfig
+     */
+    protected function setServiceDescription($jsonConfig)
+    {
+        $config = json_decode($jsonConfig, true);
+        $this->description = new Description($config);
+    }
+
+
+    /**
      * @param string $commandName
      * @param array  $params
      *
@@ -63,8 +68,8 @@ class GuzzleCommandClient
             $command = empty($params) ? $this->client->getCommand($commandName) : $this->client->getCommand($commandName, $params);
 
             $command->getEmitter()->on('process', function (ProcessEvent $event) {
-                $event->setResult($event->getResponse()->json());
-            });
+                    $event->setResult($event->getResponse()->json());
+                });
 
             $result = $this->client->execute($command);
 
@@ -77,16 +82,17 @@ class GuzzleCommandClient
     }
 
     /**
-     * initialize the client
      * @param array $options
+     *
+     * @throws \Exception
      */
-    private function initClient(array $options = array())
+    protected function initClient(array $options = array())
     {
-        $client = empty($options) ? new Client() : new Client($options);
+        if (!$this->description) {
+            throw new \Exception("Service description not configured.");
+        }
 
-        $json = file_get_contents(__DIR__. "/../Resources/config/service.json");
-        $config = json_decode($json, true);
-        $description = new Description($config);
-        $this->client = new GuzzleClient($client, $description);
+        $client = empty($options) ? new Client() : new Client($options);
+        $this->client = new GuzzleClient($client, $this->description);
     }
 }
