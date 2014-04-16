@@ -57,7 +57,7 @@ class GuzzleCommandClient
      *
      * @return array
      */
-    private function executeCommand ($commandName, array $params = array())
+    protected function executeCommand ($commandName, array $params = array())
     {
         try {
             $command = empty($params) ? $this->client->getCommand($commandName) : $this->client->getCommand($commandName, $params);
