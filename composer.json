@@ -1,0 +1,30 @@
+{
+    "name": "asgoodasnu/guzzlecommandclient",
+    "type": "symfony-bundle",
+    "description": "Guzzle Client for Symfony2",
+    "keywords":     ["ebay"],
+    "homepage": "https://github.com/asgoodasnu/guzzlecommandclient",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Simon Chrzanowski",
+            "email": "simon@wirkaufens.de",
+            "homepage": "http://wirkaufens.de"
+        },
+        {
+            "name": "Github Community",
+            "homepage": "https://github.com/asgoodasnu/guzzlecommandclient/contributors"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "~4.0",
+        "guzzlehttp/command": "0.3.0",
+        "guzzlehttp/guzzle-services": "0.2.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.0.*"
+    },
+    "autoload": {
+        "psr-4": { "Wk\\GuzzleCommandClient\\": "" }
+    }
+}
