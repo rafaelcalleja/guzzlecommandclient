@@ -44,31 +44,12 @@ class GuzzleCommandClient
     }
 
     /**
-     * Set the base url to a new value and re-create the client
-     * @param string $baseUrl
-     */
-    protected function setBaseUrl($baseUrl)
-    {
-        $this->initClient(array('base_url' => $baseUrl));
-    }
-
-    /**
-     * @param string $jsonConfig
-     */
-    protected function setServiceDescription($jsonConfig)
-    {
-        $config = json_decode($jsonConfig, true);
-        $this->description = new Description($config);
-    }
-
-
-    /**
      * @param string $commandName
      * @param array  $params
      *
      * @return array
      */
-    protected function executeCommand ($commandName, array $params = array())
+    public function executeCommand ($commandName, array $params = array())
     {
         try {
             $command = empty($params) ? $this->client->getCommand($commandName) : $this->client->getCommand($commandName, $params);
@@ -86,6 +67,25 @@ class GuzzleCommandClient
 
         return $result ? array("status" => "success", "message" => $result) : array("status" => "error", "message" => "Empty response after API call.");
     }
+
+    /**
+     * Set the base url to a new value and re-create the client
+     * @param string $baseUrl
+     */
+    protected function setBaseUrl($baseUrl)
+    {
+        $this->initClient(array('base_url' => $baseUrl));
+    }
+
+    /**
+     * @param string $jsonConfig
+     */
+    protected function setServiceDescription($jsonConfig)
+    {
+        $config = json_decode($jsonConfig, true);
+        $this->description = new Description($config);
+    }
+
 
     /**
      * @param array $options
