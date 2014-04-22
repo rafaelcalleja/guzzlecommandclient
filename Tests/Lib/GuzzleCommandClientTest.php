@@ -16,6 +16,9 @@ use Wk\GuzzleCommandClient\Lib\GuzzleCommandClient;
  */
 class GuzzleCommandClientTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * Test for the execute command method
+     */
     public function testExecuteCommand()
     {
         $jsonString = '{"status":true}';
@@ -38,7 +41,8 @@ class GuzzleCommandClientTest extends \PHPUnit_Framework_TestCase
         $guzzle = new GuzzleCommandClient($json);
         $guzzle->setClient($clientMock);
 
-        $result = $guzzle->executeCommand('getRandomStuff');
-        $this->assertEquals($jsonStringArray['status'], $result['status']);
+        $result = $guzzle->executeCommand('getTest');
+
+        $this->assertEquals($jsonStringArray['status'], $result['message']['status']);
     }
 }

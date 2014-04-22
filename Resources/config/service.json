@@ -2,5 +2,12 @@
     "name": "Ebay",
     "apiVersion": "2014-04-22",
     "baseUrl": "",
-    "description": "This is the Generic Guzzle Command Client"
+    "description": "This is the Generic Guzzle Command Client",
+    "operations": {
+        "getTest": {
+            "httpMethod": "GET",
+            "uri": "",
+            "summary": "Test"
+        }
+    }
 }
