@@ -19,6 +19,12 @@ class GuzzleCommandClient
     /** @var  \GuzzleHttp\Command\Guzzle\Description */
     protected $description;
 
+
+    public function __construct($jsonServiceDescription)
+    {
+        $this->setServiceDescription($jsonServiceDescription);
+        $this->initClient();
+    }
     /**
      * Getter for the client
      * @return GuzzleClient $client
