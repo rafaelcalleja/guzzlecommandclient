@@ -19,7 +19,10 @@ class GuzzleCommandClient
     /** @var  \GuzzleHttp\Command\Guzzle\Description */
     protected $description;
 
-
+    /**
+     * Constructor for the class
+     * @param string $jsonServiceDescription
+     */
     public function __construct($jsonServiceDescription)
     {
         $this->setServiceDescription($jsonServiceDescription);
