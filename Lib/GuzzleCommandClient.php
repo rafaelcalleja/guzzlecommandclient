@@ -6,6 +6,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Command\Guzzle\GuzzleClient;
 use GuzzleHttp\Command\Guzzle\Description;
 use GuzzleHttp\Command\Event\ProcessEvent;
+use GuzzleHttp\Event\BeforeEvent;
 
 /**
  * Class GuzzleCommandClient
@@ -89,19 +90,50 @@ class GuzzleCommandClient
         $this->description = new Description($config);
     }
 
+    /**
+     * Set the headers for the request
+     * @param array $headers
+     */
+    protected function setHeaders(array $headers)
+    {
+        $this->initClient(null, $headers);
+    }
 
     /**
      * @param array $options
+     * @param array $headers
      *
      * @throws \Exception
      */
-    protected function initClient(array $options = array())
+    protected function initClient(array $options = array(), array $headers = array())
     {
         if (!$this->description) {
             throw new \Exception("Service description not configured.");
         }
 
         $client = empty($options) ? new Client() : new Client($options);
+
+        if (!empty($headers)) {
+            $client->getEmitter()->on(
+                'before',
+                function (BeforeEvent $e) use ($headers) {
+                    $this->addHeaders($headers, $e->getRequest());
+                }
+            );
+        }
+
         $this->client = new GuzzleClient($client, $this->description);
+    }
+
+    /**
+     * Add headers to the request
+     * @param $headers
+     * @param $request
+     */
+    private function addHeaders($headers, $request)
+    {
+        foreach ($headers as $header => $value) {
+            $request->setHeader($header, $value);
+        }
     }
 }
