@@ -59,7 +59,7 @@ class GuzzleCommandClient
             $command = empty($params) ? $this->client->getCommand($commandName) : $this->client->getCommand($commandName, $params);
 
             $command->getEmitter()->on('process', function (ProcessEvent $event) {
-                    $event->setResult($event->getResponse()->json());
+                    $event->setResult($event->getResponse());
                 });
 
             $result = $this->client->execute($command);

@@ -1,24 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="./vendor/autoload.php"
-         colors="true"
-         processIsolation="false"
-         stopOnFailure="false"
-         syntaxCheck="false"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true"
-         testSuiteLoaderClass="PHPUnit_Runner_StandardTestSuiteLoader">
 
+<phpunit colors="true" bootstrap="vendor/autoload.php">
     <testsuites>
-        <testsuite>
-            <directory>Tests</directory>
+        <testsuite name="GuzzleCommandClient Bundle Test Suite">
+            <directory>./Tests</directory>
         </testsuite>
     </testsuites>
 
     <filter>
         <whitelist>
-            <directory suffix=".php">src</directory>
+            <directory>.</directory>
+            <exclude>
+                <directory>./Resources</directory>
+                <directory>./Tests</directory>
+                <directory>./vendor</directory>
+            </exclude>
         </whitelist>
     </filter>
-
 </phpunit>
