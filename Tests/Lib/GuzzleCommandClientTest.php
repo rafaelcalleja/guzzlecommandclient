@@ -41,8 +41,9 @@ class GuzzleCommandClientTest extends \PHPUnit_Framework_TestCase
         $guzzle = new GuzzleCommandClient($json);
         $guzzle->setClient($clientMock);
 
-        $result = $guzzle->executeCommand('getTest');
+        /** @var Response $message */
+        $message = $guzzle->executeCommand('getTest')['message'];
 
-        $this->assertEquals($jsonStringArray['status'], $result['message']['status']);
+        $this->assertEquals($jsonStringArray['status'], $message->json()['status']);
     }
 }
